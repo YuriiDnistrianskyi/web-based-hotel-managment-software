@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class HotelRoomConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'hotel_room'
+    name = 'apps.hotel_room'
