@@ -28,68 +28,8 @@ class User(models.Model):
     )
     bonuses = models.IntegerField()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from django.db import models
-# from django.conf import settings
-# from apps.locations.models import Location
-
-# class Comment(models.Model):
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name='comments'
-#     )
-#     location = models.ForeignKey(
-#         Location,
-#         on_delete=models.CASCADE,
-#         related_name='comments'
-#     )
-#     text = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-
-# class Like(models.Model):
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name='likes'
-#     )
-#     location = models.ForeignKey(
-#         Location,
-#         on_delete=models.CASCADE,
-#         related_name='likes'
-#     )
-
-#     class Meta:
-#         constraints = [
-#             models.UniqueConstraint(
-#                 fields=['user', 'location'],
-#                 name='unique_user_location_like'
-#             )
-#         ]
+    @staticmethod
+    def factory(**validation_date):
+        return User.objects.create(
+            **validation_date
+        )
