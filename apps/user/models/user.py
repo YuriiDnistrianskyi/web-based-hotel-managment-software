@@ -11,7 +11,7 @@ class User(models.Model):
         email varcahr(60) [not null, unique]
         phone varchar(60) [not null]
         passwordHash varchar(200) [not null]
-        dateOdBirth varchar(60)
+        date_of_birth varchar(60)
         roleId int [not null, ref: > Role.id]
         bonuses int [not null]
     """
@@ -20,7 +20,7 @@ class User(models.Model):
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
     password_hash = models.CharField(max_length=400)
-    dateOfBirth = models.DateField(auto_now_add=True)
+    date_of_birth = models.DateField(auto_now_add=True)
     role = models.ForeignKey(
         UserRoleType,
         on_delete=models.CASCADE,
@@ -29,7 +29,11 @@ class User(models.Model):
     bonuses = models.IntegerField()
 
     @staticmethod
-    def factory(**validation_date):
+    def factory(**validation_data):
+        role_name = validation_data.pop('role')
+
+        validation_data['role_id'] = UserRoleType.objects.get(name=role_name).id
+
         return User.objects.create(
-            **validation_date
+            **validation_data
         )

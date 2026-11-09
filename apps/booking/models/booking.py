@@ -42,3 +42,17 @@ class Booking(models.Model):
         on_delete=models.CASCADE,
         related_name="bookings"
     )
+
+    @staticmethod
+    def factory(**validation_data):
+        room_number = validation_data.pop('room')
+        user_email = validation_data.pop('user')
+        status_name = validation_data.pop('status')
+
+        validation_data['room_id'] = HotelRoom.objects.get(number=room_number).id
+        validation_data['user_id'] = User.objects.get(email=user_email).id
+        validation_data['status_id'] = BookingStatusType.objects.get(name=status_name).id
+
+        return Booking.objects.create(
+            **validation_data
+        )

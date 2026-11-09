@@ -7,5 +7,5 @@ class UserService(BaseService[User]):
 
     def create(self, **validation_data):
         if 'password' in validation_data:
-            validation_data['password'] = HashedFacade.hash_password(validation_data['password'])
+            validation_data['password'] = HashedFacade.hash(validation_data['password'])
         return super().create(**validation_data)

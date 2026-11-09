@@ -14,9 +14,9 @@ class BaseRepository(Generic[T]):
     def get_by_id(self, obj_id: int) -> T:
         return self._class_type.objects.get(self._class, id=obj_id)
 
-    def create(self, **validation_date) -> T:
-        return self._class_type.objects.create(
-            **validation_date
+    def create(self, **validation_data) -> T:
+        return self._class_type.factory(
+            **validation_data
         )
 
     def update(self, object: models.Model) -> T:

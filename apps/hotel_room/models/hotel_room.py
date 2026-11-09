@@ -28,4 +28,15 @@ class HotelRoom(models.Model):
         on_delete=models.CASCADE,
         related_name="rooms"
     )
-    
+
+    @staticmethod
+    def factory(**validation_data):
+        type_name = validation_data.pop('type')
+        status_name = validation_data.pop('status')
+
+        validation_data['type_id'] = RoomType.objects.get(title=type_name).id
+        validation_data['status_id'] = RoomStatusType.objects.get(title=status_name).id
+
+        return HotelRoom.objects.create(
+            **validation_data
+        )
