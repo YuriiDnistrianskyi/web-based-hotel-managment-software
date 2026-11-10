@@ -3,4 +3,5 @@ from core.base_service import BaseService
 
 
 class HotelRoomService(BaseService[HotelRoom]):
-    pass
+    def get(self, **filters):
+        return self._rep.get(**filters)
