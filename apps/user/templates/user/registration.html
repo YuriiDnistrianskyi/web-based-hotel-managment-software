@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel — Реєстрація</title>
+  <link rel="stylesheet" href="{% static 'user/css/registration.css' %}">
+</head>
+<body>
+
+  <main class="auth-page">
+    <div class="auth-card">
+
+      <div class="brand">
+        <h1>Hotel</h1>
+        <p>У цікавому місті</p>
+      </div>
+
+      <h2>Реєстрація</h2>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="form-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="row">
+          <div class="field {% if form.first_name.errors %}has-error{% endif %}">
+            <label for="{{ form.first_name.id_for_label }}">Ім'я</label>
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </div>
+
+          <div class="field {% if form.last_name.errors %}has-error{% endif %}">
+            <label for="{{ form.last_name.id_for_label }}">Прізвище</label>
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </div>
+        </div>
+
+        <div class="field {% if form.email.errors %}has-error{% endif %}">
+          <label for="{{ form.email.id_for_label }}">Електронна пошта</label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+
+        <div class="row">
+          <div class="field {% if form.phone.errors %}has-error{% endif %}">
+            <label for="{{ form.phone.id_for_label }}">Телефон</label>
+            {{ form.phone }}
+            {{ form.phone.errors }}
+          </div>
+
+          <div class="field {% if form.date_of_birth.errors %}has-error{% endif %}">
+            <label for="{{ form.date_of_birth.id_for_label }}">Дата народження</label>
+            {{ form.date_of_birth }}
+            {{ form.date_of_birth.errors }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field {% if form.password1.errors %}has-error{% endif %}">
+            <label for="{{ form.password1.id_for_label }}">Пароль</label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+          </div>
+
+          <div class="field {% if form.password2.errors %}has-error{% endif %}">
+            <label for="{{ form.password2.id_for_label }}">Повторіть пароль</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Зареєструватися</button>
+      </form>
+
+      <p class="auth-footer">
+        Вже є акаунт? <a href="{% url 'login' %}">Увійти</a>
+      </p>
+
+    </div>
+  </main>
+
+</body>
+</html>

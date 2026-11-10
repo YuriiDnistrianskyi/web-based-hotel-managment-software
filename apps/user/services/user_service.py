@@ -12,5 +12,5 @@ class UserService(BaseService[User]):
             raise ValueError(f"User already exists with email: {email}")
 
         if 'password' in validation_data:
-            validation_data['password'] = HashedFacade.hash(validation_data['password'])
+            validation_data['password_hash'] = HashedFacade.hash(validation_data.pop('password'))
         return super().create(**validation_data)
