@@ -8,9 +8,9 @@ T = TypeVar("T", bound=models.Model)
 class BaseRepository(Generic[T]):
     _class_type: type[T] = None
 
-    def get(self) -> list[T]:
-        return self._class_type.objects.all()
-
+    def get(self, **filters) -> list[T]:
+        return self._class_type.objects.filter(**filters)
+    
     def get_by_id(self, obj_id: int) -> T:
         return self._class_type.objects.get(self._class, id=obj_id)
 

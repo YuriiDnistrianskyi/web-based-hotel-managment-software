@@ -35,6 +35,21 @@
 }
 .field input:focus { outline: 2px solid var(--green-500); border-color: transparent; }
 
+.field input,
+.field select {
+  padding: 12px 14px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid var(--green-500);
+  border-color: transparent;
+}
+
 .rooms { padding: 48px; }
 .rooms h3 { font-size: 1.6rem; margin-bottom: 24px; }
 .rooms-grid {

@@ -4,56 +4,82 @@
 {% block title %}Hotel — Головна{% endblock %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'hotel_room/css/home.css' %}">
+<link rel="stylesheet" href="{% static 'hotel_room/css/home.css' %}">
 {% endblock %}
 
 {% block content %}
 
-  <section class="hero" style="--hero-image: url('{% static 'room/img/hotel.jpg' %}');">
-    <div class="hero-text">
-      <h2>Найкращий готель у потрібному місті</h2>
-      <p>
-        Ми завжди раді вас прийняти та забезпечити комфортне житло
-        на час вашого туризму, ділової поїздки чи іншої подорожі.
-      </p>
-    </div>
-  </section>
+<section class="hero" style="--hero-image: url('{% static 'room/img/hotel.jpg' %}');">
+  <div class="hero-text">
+    <h2>Найкращий готель у потрібному місті</h2>
+    <p>
+      Ми завжди раді вас прийняти та забезпечити комфортне житло
+      на час вашого туризму, ділової поїздки чи іншої подорожі.
+    </p>
+  </div>
+</section>
 
-  <form class="booking" method="get">
-    <div class="field">
-      <label for="checkin">Дата заїзду</label>
-      <input type="date" id="checkin" name="check_in" value="{{ check_in }}">
-    </div>
-    <div class="field">
-      <label for="checkout">Дата виїзду</label>
-      <input type="date" id="checkout" name="check_out" value="{{ check_out }}">
-    </div>
-    <button class="btn" type="submit">Знайти номери</button>
-  </form>
+<form class="booking" method="get">
+  <div class="field">
+    <label for="checkin">Дата заїзду</label>
+    <input type="date" id="checkin" name="check_in" value="{{ check_in|date:'Y-m-d' }}">
+  </div>
+  <div class="field">
+    <label for="checkout">Дата виїзду</label>
+    <input type="date" id="checkout" name="check_out" value="{{ check_out|date:'Y-m-d' }}">
+  </div>
 
-  <section class="rooms">
-    <h3>Доступні номери</h3>
-    <div class="rooms-grid">
-      {% for room in rooms %}
-        <article class="room">
-          <img src="{{ hotel_room.image.url }}" alt="{{ hotel_room.get_room_type_display }}">
-          <div class="room-body">
-            <div class="room-type">{{ hotel_room.get_room_type_display }}</div>
-            <div class="room-meta">Місткість: {{ hotel_room.capacity }} ос.</div>
-            <div class="room-footer">
-              <div class="price">{{ room.price|floatformat:0 }} ₴ <span>/ ніч</span></div>
-              <button class="btn">Забронювати</button>
-            </div>
-          </div>
-        </article>
-      {% empty %}
-        <p>На жаль, вільних номерів немає</p>
+  <div class="field">
+    <label for="room_type">Тип номера</label>
+    <select class="test" id="room_type" name="room_type">
+      <option value="">Будь-який</option>
+      {% for value in room_types %}
+      <option value="{{ value }}">{{ value }}</option>
       {% endfor %}
-    </div>
-  </section>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="capacity">Місткість (від)</label>
+    <select id="capacity" name="capacity">
+      {% for n in capacities %}
+      <option value="{{ n }}">{{ n }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="price_max">Максимальна ціна, ₴</label>
+    <input type="number" id="price_max" name="price_max" min="0" step="100" placeholder="Наприклад, 2000"
+      value="{{ price_max|default_if_none:'' }}">
+  </div>
+
+  <button class="btn" type="submit">Знайти номери</button>
+</form>
+
+<section class="rooms">
+  <h3>Доступні номери</h3>
+  <div class="rooms-grid">
+    {% for room in rooms %}
+    <article class="room">
+      <img src="{{ hotel_room.image.url }}" alt="{{ hotel_room.get_room_type_display }}">
+      <div class="room-body">
+        <div class="room-type">{{ hotel_room.get_room_type_display }}</div>
+        <div class="room-meta">Місткість: {{ hotel_room.capacity }} ос.</div>
+        <div class="room-footer">
+          <div class="price">{{ room.price|floatformat:0 }} ₴ <span>/ ніч</span></div>
+          <button class="btn">Забронювати</button>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <p>На жаль, вільних номерів немає</p>
+    {% endfor %}
+  </div>
+</section>
 
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'room/js/home.js' %}"></script>
+<script src="{% static 'room/js/home.js' %}"></script>
 {% endblock %}

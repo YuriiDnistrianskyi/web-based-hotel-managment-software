@@ -16,7 +16,7 @@ class HotelRoom(models.Model):
     """
 
     number = models.CharField(max_length=10)
-    capasity = models.IntegerField()
+    capacity = models.IntegerField()
     price = models.IntegerField()
     type = models.ForeignKey(
         RoomType,
