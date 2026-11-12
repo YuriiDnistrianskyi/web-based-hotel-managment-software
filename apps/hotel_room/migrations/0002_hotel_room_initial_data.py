@@ -9,7 +9,7 @@ def create_initial_data(apps, schema_editor):
 
     RoomType.objects.bulk_create([
         RoomType(title="Economy"),
-        RoomType(title="Standart"),
+        RoomType(title="Standard"),
         RoomType (title="Deluxe"),
     ])
 

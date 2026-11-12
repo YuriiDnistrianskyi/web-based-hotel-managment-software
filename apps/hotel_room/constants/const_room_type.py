@@ -1,6 +1,6 @@
 class ConstRoomType:
-    ECONOM = "Econom"
-    STANDART = "Standart"
-    DELUX = "Deluxe"
+    ECONOMY = "Economy"
+    STANDARD = "Standard"
+    DELUXE = "Deluxe"
 
-    TYPES = [ECONOM, STANDART, DELUX]
+    TYPES = [ECONOMY, STANDARD, DELUXE]

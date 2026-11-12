@@ -53,6 +53,15 @@ class HomeView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["room_types"] = ConstRoomType.TYPES
-        context["capacities"] = range(1, 6)
+        context.update(
+            {
+                "room_types": ConstRoomType.TYPES,
+                "capacities": range(1, 6),
+                "check_in": self.request.GET.get("check_in"),
+                "check_out": self.request.GET.get("check_out"),
+                "room_type": self.request.GET.get("room_type"),
+                "capacity": str(self.request.GET.get("capacity")),
+                "price_max": self.request.GET.get("price_max"),
+            }
+        )
         return context
