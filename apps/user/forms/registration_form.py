@@ -25,7 +25,7 @@ class RegistrationForm(forms.Form):
 
         if cleaned_data.get('password1') != cleaned_data.get('password2'):
             raise forms.ValidationError("Passwords do not match")
-        if cleaned_data.get('date_of_birth') > datetime.date.today():
+        if cleaned_data.get("date_of_birth") and cleaned_data.get('date_of_birth') > datetime.date.today():
             raise forms.ValidationError("Date of birth cannot be in the future")
 
         return cleaned_data

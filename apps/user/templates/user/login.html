@@ -15,10 +15,10 @@
 
       <div class="brand">
         <h1>Hotel</h1>
-        <p>У цікавому місті</p>
+        <p>In the rigth place</p>
       </div>
 
-      <h2>Вхід</h2>
+      <h2>Login</h2>
 
       <form method="post" novalidate>
         {% csrf_token %}
@@ -29,22 +29,22 @@
         {% endif %}
 
         <div class="field {% if form.email.errors %}has-error{% endif %}">
-          <label for="{{ form.email.id_for_label }}">Електронна пошта</label>
+          <label for="{{ form.email.id_for_label }}">Email</label>
           {{ form.email }}
           {{ form.email.errors }}
         </div>
 
         <div class="field {% if form.password.errors %}has-error{% endif %}">
-          <label for="{{ form.password.id_for_label }}">Пароль</label>
+          <label for="{{ form.password.id_for_label }}">Password</label>
           {{ form.password }}
           {{ form.password.errors }}
         </div>
 
-        <button class="btn" type="submit">Увійти</button>
+        <button class="btn" type="submit">Login</button>
       </form>
 
       <p class="auth-footer">
-        Ще немає акаунту? <a href="{% url 'register' %}">Зареєструватися</a>
+        Don`t have an account yet? <a href="{% url 'register' %}">Register</a>
       </p>
 
     </div>
