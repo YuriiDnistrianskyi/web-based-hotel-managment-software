@@ -19,7 +19,7 @@ class Booking(models.Model):
         statusId int [not null, ref: > BookingStatusType.id]
     """
 
-    room = models.ForeignKey(
+    hotel_room = models.ForeignKey(
         HotelRoom,
         on_delete=models.CASCADE,
         related_name="bookings"
@@ -30,8 +30,8 @@ class Booking(models.Model):
         on_delete=models.CASCADE,
         related_name="bookings"
     )
-    checkInDate = models.DateField()
-    checkOutDate = models.DateField()
+    check_in = models.DateField()
+    check_out = models.DateField()
     meals = models.BooleanField(default=False) # ?
     transfer = models.BooleanField(default=False) # ?
     spa = models.BooleanField(default=False) # ?
@@ -49,7 +49,7 @@ class Booking(models.Model):
         user_email = validation_data.pop('user')
         status_name = validation_data.pop('status')
 
-        validation_data['room_id'] = HotelRoom.objects.get(number=room_number).id
+        validation_data['hotel_room_id'] = HotelRoom.objects.get(number=room_number).id
         validation_data['user_id'] = User.objects.get(email=user_email).id
         validation_data['status_id'] = BookingStatusType.objects.get(name=status_name).id
 

@@ -1,3 +1,3 @@
-from .booking_repository import BaseRepository
+from .booking_repository import BookingRepository
 
-booking_rep = BaseRepository()
+booking_rep = BookingRepository()

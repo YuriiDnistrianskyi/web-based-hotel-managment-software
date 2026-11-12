@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel — Вхід</title>
+  <link rel="stylesheet" href="{% static 'user/css/registration.css' %}">
+  <link rel="stylesheet" href="{% static 'user/css/login.css' %}">
+</head>
+<body>
+
+  <main class="auth-page">
+    <div class="auth-card login-card">
+
+      <div class="brand">
+        <h1>Hotel</h1>
+        <p>In the rigth place</p>
+      </div>
+
+      <h2>Login</h2>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        {% if form.non_field_errors %}
+          <div class="form-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="field {% if form.email.errors %}has-error{% endif %}">
+          <label for="{{ form.email.id_for_label }}">Email</label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+
+        <div class="field {% if form.password.errors %}has-error{% endif %}">
+          <label for="{{ form.password.id_for_label }}">Password</label>
+          {{ form.password }}
+          {{ form.password.errors }}
+        </div>
+
+        <button class="btn" type="submit">Login</button>
+      </form>
+
+      <p class="auth-footer">
+        Don`t have an account yet? <a href="{% url 'register' %}">Register</a>
+      </p>
+
+    </div>
+  </main>
+
+</body>
+</html>

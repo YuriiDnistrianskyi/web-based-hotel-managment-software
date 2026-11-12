@@ -7,6 +7,3 @@ T = TypeVar("T")
 
 class HotelRoomRepository(BaseRepository[HotelRoom]):
     _class_type = HotelRoom
-
-    def get(self, **filters) -> list[T]:
-        return self._class_type.objects.filter(**filters)

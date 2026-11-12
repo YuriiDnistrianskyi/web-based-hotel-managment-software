@@ -16,7 +16,16 @@ class HotelRoom(models.Model):
     """
 
     number = models.CharField(max_length=10)
-    capasity = models.IntegerField()
+    discription = models.TextField(
+        null=True,
+        blank=True
+    )
+    image = models.ImageField(
+        upload_to="hotel_room/",
+        null=True,
+        blank=True,
+    )
+    capacity = models.IntegerField()
     price = models.IntegerField()
     type = models.ForeignKey(
         RoomType,
