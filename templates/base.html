@@ -14,7 +14,7 @@
   <aside class="sidebar">
     <div class="brand">
       <h1>Hotel</h1>
-      <p>У потрібному місті</p>
+      <p>In the rigth place</p>
     </div>
 
     <ul class="nav">
@@ -22,19 +22,19 @@
         <a 
         href="/home"
            class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-          Головна
+          Home
         </a>
       </li>
       <li>
         <a href="/history"
            class="{% if request.resolver_match.url_name == 'history' %}active{% endif %}">
-          Історія бронювань
+          History
         </a>
       </li>
       <li>
         <a href="/account"
            class="{% if request.resolver_match.url_name == 'account' %}active{% endif %}">
-          Кабінет
+          Account
         </a>
       </li>
     </ul>

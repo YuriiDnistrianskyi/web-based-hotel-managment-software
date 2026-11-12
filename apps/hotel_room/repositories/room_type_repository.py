@@ -1,5 +1,6 @@
 from apps.hotel_room.models.room_type import RoomType
 
+
 class RoomTypeRepository:
     _class_type = RoomType
 
