@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Hotel — History{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'booking/css/history.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h2>History</h2>
+  <p>All your bookings in one place</p>
+</section>
+
+<section class="bookings-list">
+  {% for b in bookings %}
+  <article class="booking-card">
+
+    <div class="booking-photo {% if not b.hotel_room.image %}no-photo{% endif %}">
+      {% if b.hotel_room.image %}
+        <img src="{{ b.hotel_room.image.url }}" alt="Room {{ b.hotel_room.number }}">
+      {% else %}
+        <img src="{% static 'images/default.jpg' %}" alt="Room {{ b.hotel_room.number }}">
+      {% endif %}
+    </div>
+
+    <div class="booking-info">
+      <div class="booking-top">
+        <h3>Room {{ b.hotel_room.number }}</h3>
+        <span class="room-type">{{ b.hotel_room.type.title }}</span>
+        <span class="badge badge-{{ b.status.name|slugify }}">{{ b.status.title }}</span>
+      </div>
+
+      <div class="booking-meta">Capacity: {{ b.hotel_room.capacity }} guests</div>
+
+      <div class="booking-dates">
+        <div>
+          <span class="label">Check-in</span>
+          <span class="value">{{ b.check_in|date:"d.m.Y" }}</span>
+        </div>
+        <div>
+          <span class="label">Check-out</span>
+          <span class="value">{{ b.check_out|date:"d.m.Y" }}</span>
+        </div>
+      </div>
+
+      {% if b.meals or b.transfer or b.spa %}
+      <ul class="extras">
+        {% if b.meals %}<li>Meals</li>{% endif %}
+        {% if b.transfer %}<li>Transfer</li>{% endif %}
+        {% if b.spa %}<li>SPA</li>{% endif %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <div class="booking-price">
+      <span class="amount">{{ b.price }} ₴</span>
+      <span class="note">price</span>
+    </div>
+
+  </article>
+  {% empty %}
+  <div class="empty-state">
+    <p>You don't have any bookings yet</p>
+    <a class="btn" href="{% url 'home' %}">Find rooms</a>
+  </div>
+  {% endfor %}
+</section>
+
+{% if is_paginated %}
+<nav class="pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% endblock %}

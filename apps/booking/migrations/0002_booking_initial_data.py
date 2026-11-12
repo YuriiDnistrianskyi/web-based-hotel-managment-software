@@ -8,16 +8,16 @@ def create_initial_data(apps, schema_editor):
 
     BookingStatusType.objects.bulk_create([
         BookingStatusType(title="Confirmed"),
-        BookingStatusType(title="Cancelled"),
         BookingStatusType(title="InProgress"),
         BookingStatusType(title="Completed"),
+        BookingStatusType(title="Cancelled"),
     ])
 
 def reverse_initial_data(apps, schema_editor):
     BookingStatusType = apps.get_model("booking", "BookingStatusType")
 
     BookingStatusType.objects.filter(
-        title__in=["Confirmed", "Cancelled", "InProgress", "Completed"]
+        title__in=["Confirmed", "InProgress", "Completed", "Cancelled"]
     ).delete()
 
 
