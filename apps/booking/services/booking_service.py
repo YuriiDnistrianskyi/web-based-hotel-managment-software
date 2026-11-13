@@ -8,24 +8,24 @@ class BookingService(BaseService[Booking]):
         bookings = super().get(**filters)
         return bookings.select_related("hotel_room", "hotel_room__type", "status")
 
-    def start_booking(self, booking_id: int):
-        booking = self._rep.get_by_id(id=id)
+    def start_booking(self, obj_id: int):
+        booking = self._rep.get_by_id(id=obj_id)
 
         state = BookingStateFactory.create(booking)
         state.start(booking)
 
         return self._rep.update(booking)
 
-    def complete_booking(self, booking_id: int):
-        booking = self._rep.get_by_id(id=id)
+    def complete_booking(self, obj_id: int):
+        booking = self._rep.get_by_id(obj_id)
         
         state = BookingStateFactory.create(booking)
         state.complete(booking)
         
         return self._rep.update(booking)
 
-    def cancel_booking(self, booking_id: int):
-        booking = self._rep.get_by_id(id=id)
+    def cancel_booking(self, obj_id: int):
+        booking = self._rep.get_by_id(id=obj_id)
         
         state = BookingStateFactory.create(booking)
         state.cancel(booking)
