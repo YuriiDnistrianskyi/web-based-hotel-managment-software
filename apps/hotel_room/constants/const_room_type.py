@@ -3,4 +3,4 @@ class ConstRoomType:
     STANDARD = "Standard"
     DELUXE = "Deluxe"
 
-    TYPES = [ECONOMY, STANDARD, DELUXE]
+    TYPES = (ECONOMY, STANDARD, DELUXE)
