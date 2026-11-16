@@ -13,5 +13,5 @@ class HistoryView(LoginRequiredMixin, ListView):
     ordering = ['status__id', '-check_in']
 
     def get_queryset(self):
-        bookings = booking_service.get_related(user_id=self.request.user.id)
+        bookings = booking_service.get_related(user_id=self.request.user.id).prefetch_related("services")
         return bookings 

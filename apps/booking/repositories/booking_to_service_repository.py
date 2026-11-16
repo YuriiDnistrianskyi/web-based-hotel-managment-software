@@ -8,7 +8,6 @@ class BookingToServiceRepository:
         return self._class_type.factory(
             **validation_data
         )
-        
 
     def get_by_booking_id(self, booking_id: int):
         return self._class_type.objects.filter(booking_id=booking_id)

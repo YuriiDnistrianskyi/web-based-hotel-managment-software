@@ -33,11 +33,9 @@
 
             <div class="room-preview-image">
                 {% if booking.hotel_room.image %}
-                    <img src="{{ booking.hotel_room.image.url }}"
-                         alt="Room {{ booking.hotel_room.number }}">
+                <img src="{{ booking.hotel_room.image.url }}" alt="Room {{ booking.hotel_room.number }}">
                 {% else %}
-                    <img src="{% static 'images/default.jpg' %}"
-                         alt="Room {{ booking.hotel_room.number }}">
+                <img src="{% static 'images/default.jpg' %}" alt="Room {{ booking.hotel_room.number }}">
                 {% endif %}
             </div>
 
@@ -65,16 +63,25 @@
         </div>
 
         {% if form.non_field_errors %}
-            <div class="form-errors">
-                {{ form.non_field_errors }}
-            </div>
+        <div class="form-errors">
+            {{ form.non_field_errors }}
+        </div>
         {% endif %}
 
         <div class="form-section">
 
+            <div class="field">
+                    <label for="{{ form.number_of_guests.id_for_label }}">
+                        Number of guests
+                    </label>
+                    {{ form.number_of_guests }}
+                    {{ form.number_of_guests.errors }}
+                </div>
+
             <h4>Stay dates</h4>
 
             <div class="form-grid">
+
 
                 <div class="field">
                     <label for="{{ form.check_in.id_for_label }}">
@@ -84,7 +91,7 @@
                     {{ form.check_in.errors }}
                 </div>
 
-                <div  class="field">
+                <div class="field">
                     <label for="{{ form.check_out.id_for_label }}">
                         Check-out
                     </label>
@@ -97,48 +104,31 @@
 
         <div class="form-section">
 
-            <h4>Additional services</h4>
-
-            <p class="section-description">
-                Select the services you want to include in your reservation.
-            </p>
 
             <div class="services-grid">
 
+                {% for checkbox in form.services %}
+
                 <label class="service-option">
-                    {{ form.meals }}
+
+                    {{ checkbox.tag }}
 
                     <span class="service-content">
-                        <strong>Meals</strong>
-                        <small>Include meals during your stay.</small>
+                        <strong>{{ checkbox.choice_label }}</strong>
                     </span>
 
                     <span class="service-check"></span>
+
                 </label>
 
-                <label class="service-option">
-                    {{ form.transfer }}
+                {% empty %}
 
-                    <span class="service-content">
-                        <strong>Transfer</strong>
-                        <small>Transportation to and from the hotel.</small>
-                    </span>
+                <p>No services available.</p>
 
-                    <span class="service-check"></span>
-                </label>
-
-                <label class="service-option">
-                    {{ form.spa }}
-
-                    <span class="service-content">
-                        <strong>SPA</strong>
-                        <small>Relax and enjoy SPA services.</small>
-                    </span>
-
-                    <span class="service-check"></span>
-                </label>
+                {% endfor %}
 
             </div>
+
 
         </div>
 
@@ -164,9 +154,8 @@
             </p>
         </div>
 
-        <form method="POST"
-              action="{% url 'booking_cancel' booking.id %}"
-              onsubmit="return confirm('Are you sure you want to cancel this booking?')">
+        <form method="POST" action="{% url 'booking_cancel' booking.id %}"
+            onsubmit="return confirm('Are you sure you want to cancel this booking?')">
 
             {% csrf_token %}
 

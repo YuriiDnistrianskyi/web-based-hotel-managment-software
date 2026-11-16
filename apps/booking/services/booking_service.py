@@ -1,22 +1,22 @@
 from apps.booking.booking_state_factory import BookingStateFactory
-
-# from apps.booking.repositories.booking_status_repository import BookingStatusRepository
 from apps.booking.constants.const_booking_status import ConstBookingStatus
 from apps.booking.exceptions.booking_exists_exception import BookingExistsException
 from apps.booking.models.booking import Booking
-
-# from core.base_repository import BaseRepository
+from apps.booking.repositories.booking_to_service_repository import (
+    BookingToServiceRepository,
+)
+from core.base_repository import BaseRepository
 from core.base_service import BaseService
 
 
 class BookingService(BaseService[Booking]):
-    # def __init__(self, rep: BaseRepository, booking_status_rep: BookingStatusRepository):
+    # def __init__(self, rep: BaseRepository, booking_to_service_rep: BookingToServiceRepository):
     #     super().__init__(rep)
-    #     self._booking_status_rep = booking_status_rep
+    #     self._booking_to_service_rep = booking_to_service_rep
 
     def get_related(self, **filters):
         bookings = super().get(**filters)
-        return bookings.select_related("hotel_room", "hotel_room__type", "status")
+        return bookings.select_related("hotel_room", "hotel_room__type", "status") #?
 
     def update(self, obj_id, **validation_data):
         obj = self._rep.get_by_id(obj_id)
@@ -35,6 +35,12 @@ class BookingService(BaseService[Booking]):
             raise BookingExistsException("This room is already booked for there dates")
 
         return super().update(obj_id, **validation_data)
+
+    def set_services(self, obj_id: int, services: list):
+        obj = self._rep.get_by_id(obj_id=obj_id)
+
+        obj.services.set(services)
+
 
     def start_booking(self, obj_id: int):
         booking = self._rep.get_by_id(id=obj_id)

@@ -11,3 +11,6 @@ class Service(models.Model):
         return Service.objects.create(
             **validation_data
         )
+
+    def __str__(self):
+        return self.title

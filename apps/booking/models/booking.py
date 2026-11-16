@@ -34,7 +34,7 @@ class Booking(models.Model):
     )
     check_in = models.DateField()
     check_out = models.DateField()
-    number_of_guestrs = models.IntegerField(validators=[MinValueValidator(1)])
+    number_of_guests = models.IntegerField(validators=[MinValueValidator(1)])
     price = models.IntegerField()
 
     status = models.ForeignKey(

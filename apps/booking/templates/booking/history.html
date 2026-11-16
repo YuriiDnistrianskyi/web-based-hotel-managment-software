@@ -16,57 +16,57 @@
 
 <section class="bookings-list">
   {% for b in bookings %}
-    {% if b.status.title == 'Confirmed' %}
-    <a href="{% url 'booking_edit' b.id %}" class="booking-link">
+  {% if b.status.title == 'Confirmed' %}
+  <a href="{% url 'booking_edit' b.id %}" class="booking-link">
     {% else %}
     <div class="booking-link">
-    {% endif %}
-    <article class="booking-card">
+      {% endif %}
+      <article class="booking-card">
 
-      <div class="booking-photo {% if not b.hotel_room.image %}no-photo{% endif %}">
-        {% if b.hotel_room.image %}
+        <div class="booking-photo {% if not b.hotel_room.image %}no-photo{% endif %}">
+          {% if b.hotel_room.image %}
           <img src="{{ b.hotel_room.image.url }}" alt="Room {{ b.hotel_room.number }}">
-        {% else %}
+          {% else %}
           <img src="{% static 'images/default.jpg' %}" alt="Room {{ b.hotel_room.number }}">
-        {% endif %}
-      </div>
-
-      <div class="booking-info">
-        <div class="booking-top">
-          <h3>Room {{ b.hotel_room.number }}</h3>
-          <span class="room-type">{{ b.hotel_room.type.title }}</span>
-          <span class="badge badge-{{ b.status.name|slugify }}">{{ b.status.title }}</span>
+          {% endif %}
         </div>
 
-        <div class="booking-meta">Capacity: {{ b.hotel_room.capacity }} guests</div>
+        <div class="booking-info">
+          <div class="booking-top">
+            <h3>Room {{ b.hotel_room.number }}</h3>
+            <span class="room-type">{{ b.hotel_room.type.title }}</span>
+            <span class="badge badge-{{ b.status.name|slugify }}">{{ b.status.title }}</span>
+          </div>
 
-        <div class="booking-dates">
-          <div>
-            <span class="label">Check-in</span>
-            <span class="value">{{ b.check_in|date:"d.m.Y" }}</span>
+          <div class="booking-meta">Number of guests: {{ b.number_of_guests }} guests</div>
+
+          <div class="booking-dates">
+            <div>
+              <span class="label">Check-in</span>
+              <span class="value">{{ b.check_in|date:"d.m.Y" }}</span>
+            </div>
+            <div>
+              <span class="label">Check-out</span>
+              <span class="value">{{ b.check_out|date:"d.m.Y" }}</span>
+            </div>
           </div>
-          <div>
-            <span class="label">Check-out</span>
-            <span class="value">{{ b.check_out|date:"d.m.Y" }}</span>
-          </div>
+
+          <ul class="extras">
+            {% for service in b.services.all %}
+            <li>{{ service.title }}</li>
+            {% empty %}
+            <li>No additional services</li>
+            {% endfor %}
+          </ul>
         </div>
 
-        {% if b.meals or b.transfer or b.spa %}
-        <ul class="extras">
-          {% if b.meals %}<li>Meals</li>{% endif %}
-          {% if b.transfer %}<li>Transfer</li>{% endif %}
-          {% if b.spa %}<li>SPA</li>{% endif %}
-        </ul>
-        {% endif %}
-      </div>
+        <div class="booking-price">
+          <span class="amount">{{ b.price }} ₴</span>
+          <span class="note">price</span>
+        </div>
 
-      <div class="booking-price">
-        <span class="amount">{{ b.price }} ₴</span>
-        <span class="note">price</span>
-      </div>
-
-    </article>
-  {% if b.status.title == 'Confirmed' %}
+      </article>
+      {% if b.status.title == 'Confirmed' %}
   </a>
   {% else %}
   </div>

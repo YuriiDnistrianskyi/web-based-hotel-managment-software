@@ -21,7 +21,13 @@ class BookingUpdateView(LoginRequiredMixin, UpdateView):
         try:
             booking_service.update(
                 obj_id=self.object.id,
-                **form.cleaned_data
+                check_in=form.cleaned_data['check_in'],
+                check_out=form.cleaned_data['check_out'],
+                number_of_guests=form.cleaned_data['number_of_guests']
+            )
+            booking_service.set_services(
+                obj_id=self.object.id,
+                services=form.cleaned_data['services']
             )
     
             return redirect(reverse_lazy('history'))
