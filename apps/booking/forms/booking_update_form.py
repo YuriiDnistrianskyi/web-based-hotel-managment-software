@@ -8,9 +8,6 @@ class BookingUpdateForm(forms.ModelForm):
         fields = [
             'check_in',
             'check_out',
-            'spa',
-            'meals',
-            'transfer',
         ]
         widgets = {
             'check_in': forms.DateInput(attrs={
