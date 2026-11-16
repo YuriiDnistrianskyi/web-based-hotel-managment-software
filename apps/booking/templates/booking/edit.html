@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hotel — Edit Booking{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'booking/css/edit.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <h2>Edit booking</h2>
+    <p>Manage your reservation and additional services.</p>
+</section>
+
+<section class="edit-booking">
+
+    <div class="edit-card">
+
+        <div class="edit-card-header">
+            <div>
+                <h3>Booking</h3>
+                <p>Room {{ booking.hotel_room.number }}</p>
+            </div>
+
+            <span class="badge badge-{{ booking.status.name|slugify }}">
+                {{ booking.status.title }}
+            </span>
+        </div>
+
+        <div class="room-preview">
+
+            <div class="room-preview-image">
+                {% if booking.hotel_room.image %}
+                    <img src="{{ booking.hotel_room.image.url }}"
+                         alt="Room {{ booking.hotel_room.number }}">
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}"
+                         alt="Room {{ booking.hotel_room.number }}">
+                {% endif %}
+            </div>
+
+            <div class="room-preview-info">
+                <span class="room-type">
+                    {{ booking.hotel_room.type.title }}
+                </span>
+
+                <p>Capacity: {{ booking.hotel_room.capacity }} guests</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <form method="POST" class="edit-card">
+
+        {% csrf_token %}
+
+        <div class="edit-card-header">
+            <div>
+                <h3>Reservation details</h3>
+                <p>Change your stay dates and additional services.</p>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-section">
+
+            <h4>Stay dates</h4>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="{{ form.check_in.id_for_label }}">
+                        Check-in
+                    </label>
+                    {{ form.check_in }}
+                    {{ form.check_in.errors }}
+                </div>
+
+                <div  class="field">
+                    <label for="{{ form.check_out.id_for_label }}">
+                        Check-out
+                    </label>
+                    {{ form.check_out }}
+                    {{ form.check_out.errors }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-section">
+
+            <h4>Additional services</h4>
+
+            <p class="section-description">
+                Select the services you want to include in your reservation.
+            </p>
+
+            <div class="services-grid">
+
+                <label class="service-option">
+                    {{ form.meals }}
+
+                    <span class="service-content">
+                        <strong>Meals</strong>
+                        <small>Include meals during your stay.</small>
+                    </span>
+
+                    <span class="service-check"></span>
+                </label>
+
+                <label class="service-option">
+                    {{ form.transfer }}
+
+                    <span class="service-content">
+                        <strong>Transfer</strong>
+                        <small>Transportation to and from the hotel.</small>
+                    </span>
+
+                    <span class="service-check"></span>
+                </label>
+
+                <label class="service-option">
+                    {{ form.spa }}
+
+                    <span class="service-content">
+                        <strong>SPA</strong>
+                        <small>Relax and enjoy SPA services.</small>
+                    </span>
+
+                    <span class="service-check"></span>
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'history' %}" class="btn-secondary">
+                Back
+            </a>
+
+            <button type="submit" class="btn-primary">
+                Save changes
+            </button>
+        </div>
+
+    </form>
+
+    <div class="cancel-card">
+
+        <div>
+            <h3>Cancel reservation</h3>
+            <p>
+                If you no longer need this reservation,
+                you can cancel it.
+            </p>
+        </div>
+
+        <form method="POST"
+              action="{% url 'booking_cancel' booking.id %}"
+              onsubmit="return confirm('Are you sure you want to cancel this booking?')">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn-danger">
+                Cancel booking
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+<script src="{% static 'booking/js/edit.js' %}"></script>
+
+{% endblock %}

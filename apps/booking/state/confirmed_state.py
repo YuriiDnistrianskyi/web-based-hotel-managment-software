@@ -12,6 +12,6 @@ class ConfirmedState(BaseState):
         )
 
     def cancel(booking: Booking):
-        booking.status = booking_status_rep.get_ty_title(
+        booking.status = booking_status_rep.get_by_title(
             title= ConstBookingStatus.CANCELLED
         )

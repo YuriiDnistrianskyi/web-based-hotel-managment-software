@@ -4,7 +4,7 @@ from django.db import models
 
 T = TypeVar("T", bound=models.Model)
 
-class BaseStatusRepsoitory(Generic[T]):
+class BaseTypeRepsoitory(Generic[T]):
     _class_type: models.Model = None
     
     def get_by_title(self, title: str) -> T:

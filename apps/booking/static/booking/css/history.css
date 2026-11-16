@@ -9,6 +9,16 @@
   gap: 20px;
 }
 
+.booking-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.booking-link:hover {
+  color: inherit;
+}
+
 .booking-card {
   display: grid;
   grid-template-columns: 220px 1fr auto;

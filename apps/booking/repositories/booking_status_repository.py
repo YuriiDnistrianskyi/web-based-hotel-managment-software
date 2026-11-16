@@ -1,9 +1,8 @@
-from core.base_state_repository import BaseStateRepository
-
 from apps.booking.models.booking_status_type import BookingStatusType
+from core.base_type_repository import BaseTypeRepsoitory
 
 
-class BookingStatusRepository(BaseStateRepository[BookingStatusType]):
+class BookingStatusRepository(BaseTypeRepsoitory[BookingStatusType]):
     _class_type = BookingStatusType
 
     def get_by_id(self, obj_id: int) -> BookingStatusType:

@@ -26,7 +26,7 @@ class UserRegistrationView(FormView):
                 **data
             )
 
-            return redirect(self.success_url)
+            return redirect()
         except ValueError as ex:
             form.add_error(None, str(ex))
             return self.form_invalid(form)

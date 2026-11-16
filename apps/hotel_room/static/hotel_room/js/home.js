@@ -10,7 +10,7 @@ const todayStr = today.toISOString().split("T")[0];
 const tomorrowStr = tomorrow.toISOString().split("T")[0];
 
 checkin.min = todayStr;
-checkout.min = todayStr;
+checkout.min = tomorrowStr;
 checkin.value = todayStr;
 checkout.value = tomorrowStr;
 
