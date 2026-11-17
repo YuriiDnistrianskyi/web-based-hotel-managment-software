@@ -1,4 +1,7 @@
+from decimal import Decimal
+
 from apps.booking.booking_state_factory import BookingStateFactory
+from apps.booking.calculators.calculator_manager import CalculatorManager
 from apps.booking.constants.const_booking_status import ConstBookingStatus
 from apps.booking.exceptions.booking_exists_exception import BookingExistsException
 from apps.booking.models.booking import Booking
@@ -10,9 +13,9 @@ from core.base_service import BaseService
 
 
 class BookingService(BaseService[Booking]):
-    # def __init__(self, rep: BaseRepository, booking_to_service_rep: BookingToServiceRepository):
-    #     super().__init__(rep)
-    #     self._booking_to_service_rep = booking_to_service_rep
+    def __init__(self, rep: BaseRepository, booking_to_service_rep: BookingToServiceRepository):
+        super().__init__(rep)
+        self._booking_to_service_rep = booking_to_service_rep
 
     def get_related(self, **filters):
         bookings = super().get(**filters)
@@ -34,13 +37,51 @@ class BookingService(BaseService[Booking]):
         if busy_bookings.exists():
             raise BookingExistsException("This room is already booked for there dates")
 
+        services = validation_data.get("services", [])
+        if services:
+            for service in services:
+                price = CalculatorManager.calculate(obj, service)
+                self._booking_to_service_rep.create(
+                    booking=obj,
+                    service=service,
+                    price = price
+                )
+
+        new_price = self.calculate(obj_id=obj_id, services=services)
+        validation_data["price"] = new_price
+
         return super().update(obj_id, **validation_data)
 
-    def set_services(self, obj_id: int, services: list):
+    def calculate(self, obj_id: int, services: list, dates: list | None=None, number_of_guests: int | None=None) -> float:
         obj = self._rep.get_by_id(obj_id=obj_id)
 
-        obj.services.set(services)
+        price = Decimal('0.00')
+        if dates:
+            check_in, check_out = dates
+        else:
+            check_in, check_out = (obj.check_in, obj.check_out)
 
+        if not number_of_guests:
+            number_of_guests = obj.number_of_guests
+
+        days = (check_out - check_in).days
+        price += obj.hotel_room.price * days
+
+        additional_date = {
+            'check_in': check_in,
+            'check_out': check_out,
+            'number_of_guests': number_of_guests
+        }
+
+        for service in services:
+            service_price = CalculatorManager.calculate(
+                obj, 
+                service,
+                **additional_date,
+            )
+            price += service_price
+
+        return price
 
     def start_booking(self, obj_id: int):
         booking = self._rep.get_by_id(id=obj_id)

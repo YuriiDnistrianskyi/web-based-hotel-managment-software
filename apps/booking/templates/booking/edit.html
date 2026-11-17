@@ -48,10 +48,9 @@
             </div>
 
         </div>
-
     </div>
 
-    <form method="POST" class="edit-card">
+    <form method="POST" class="edit-card" id="booking-edit-form" data-price-url="{% url 'booking_price' booking.id %}">
 
         {% csrf_token %}
 
@@ -71,17 +70,16 @@
         <div class="form-section">
 
             <div class="field">
-                    <label for="{{ form.number_of_guests.id_for_label }}">
-                        Number of guests
-                    </label>
-                    {{ form.number_of_guests }}
-                    {{ form.number_of_guests.errors }}
-                </div>
+                <label for="{{ form.number_of_guests.id_for_label }}">
+                    Number of guests
+                </label>
+                {{ form.number_of_guests }}
+                {{ form.number_of_guests.errors }}
+            </div>
 
             <h4>Stay dates</h4>
 
             <div class="form-grid">
-
 
                 <div class="field">
                     <label for="{{ form.check_in.id_for_label }}">
@@ -103,7 +101,6 @@
         </div>
 
         <div class="form-section">
-
 
             <div class="services-grid">
 
@@ -129,7 +126,14 @@
 
             </div>
 
+        </div>
 
+        <div class="form-section">
+            <h4>Price</h4>
+            <div class="price-row price-total">
+                <span>Total</span>
+                <strong id="total-price">{{ booking.price }} ₴</strong>
+            </div>
         </div>
 
         <div class="form-actions">

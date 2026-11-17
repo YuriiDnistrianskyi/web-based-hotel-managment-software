@@ -17,6 +17,11 @@ class BookingToService(models.Model):
         related_name='booking_services'
     )
 
+    price = models.DecimalField(
+       max_digits=10,
+       decimal_places=2
+    )
+
     @staticmethod
     def factory(**validation_data):
         return BookingToService.objects.create(

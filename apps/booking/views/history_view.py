@@ -10,7 +10,7 @@ class HistoryView(LoginRequiredMixin, ListView):
     template_name = 'booking/history.html'
     context_object_name = 'bookings'
     paginate_by = 10
-    ordering = ['status__id', '-check_in']
+    ordering = ['-check_in', 'status__id']
 
     def get_queryset(self):
         bookings = booking_service.get_related(user_id=self.request.user.id).prefetch_related("services")
