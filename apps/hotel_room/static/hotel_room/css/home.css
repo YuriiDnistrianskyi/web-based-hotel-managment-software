@@ -80,3 +80,49 @@
   .hero, .rooms { padding: 28px 20px; }
   .booking { margin: -30px 20px 0; }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  padding: 16px 0;
+}
+
+.pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: var(--green-700);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.pagination a:hover {
+  background: var(--green-500);
+  transform: translateY(-2px);
+}
+
+.pagination span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@media (max-width: 500px) {
+  .pagination {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .pagination a {
+    padding: 9px 14px;
+    font-size: 0.85rem;
+  }
+}

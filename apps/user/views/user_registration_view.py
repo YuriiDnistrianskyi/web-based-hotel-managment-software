@@ -1,6 +1,5 @@
 import logging
 
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
@@ -26,11 +25,11 @@ class UserRegistrationView(FormView):
                 **data
             )
 
-            return redirect(self.success_url)
+            return super().form_valid(form)
         except ValueError as ex:
             form.add_error(None, str(ex))
             return self.form_invalid(form)
-        except Exception as ex:
-            logger.error(f"Unexpected error during user registration: {ex}")
+        except Exception:
+            logger.exception("Unexpected error during user registration")
             form.add_error(None, "An unexpected error occurred. Please try again later.")
             return self.form_invalid(form)

@@ -10,8 +10,8 @@ class BaseService(Generic[T]):
     def __init__(self, rep: BaseRepository):
         self._rep = rep
 
-    def get(self):
-        return self._rep.get()
+    def get(self, **filters):
+        return self._rep.get(**filters)
 
     def get_by_id(self, obj_id: int) -> T:
         return self._rep.get_by_id(obj_id)

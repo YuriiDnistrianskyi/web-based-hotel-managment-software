@@ -1,8 +1,6 @@
 from apps.hotel_room.models.room_status_type import RoomStatusType
+from core.base_type_repository import BaseTypeRepsoitory
 
 
-class RoomStatusRepository:
+class RoomStatusRepository(BaseTypeRepsoitory[RoomStatusType]):
     _class_type = RoomStatusType
-
-    def get_by_title(self, title: str):
-        return self._class_type.objects.get(title=title)

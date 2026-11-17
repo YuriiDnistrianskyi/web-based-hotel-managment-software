@@ -70,7 +70,7 @@
       {% endif %}
       <div class="room-body">
         <div class="room-type">{{ room.type.title }}</div>
-        <div class="room-meta">Місткість: {{ room.capacity }} ос.</div>
+        <div class="room-meta">Capacity: {{ room.capacity }} guest.</div>
         <div class="room-footer">
           <div class="price">{{ room.price|floatformat:0 }} ₴ <span>/ night</span></div>
           <button class="btn">Reserve</button>
@@ -81,6 +81,19 @@
     <p>That`s a pity, there are no vacant rooms</p>
     {% endfor %}
   </div>
+  {% if is_paginated %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">Prevoius</a>
+    {% endif %}
+    <span>
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
+  {% endif %}
 </section>
 
 {% endblock %}

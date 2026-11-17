@@ -1,8 +1,10 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from apps.booking.models.booking_status_type import BookingStatusType
 from apps.hotel_room.models.hotel_room import HotelRoom
 from apps.user.models.user import User
+from .service import Service
 
 
 class Booking(models.Model):
@@ -32,14 +34,18 @@ class Booking(models.Model):
     )
     check_in = models.DateField()
     check_out = models.DateField()
-    meals = models.BooleanField(default=False) # ?
-    transfer = models.BooleanField(default=False) # ?
-    spa = models.BooleanField(default=False) # ?
+    number_of_guests = models.IntegerField(validators=[MinValueValidator(1)])
     price = models.IntegerField()
 
     status = models.ForeignKey(
-        BookingStatusType,
+        BookingStatusType, 
         on_delete=models.CASCADE,
+        related_name="bookings"
+    )
+
+    services = models.ManyToManyField(
+        Service,
+        through="BookingToService",
         related_name="bookings"
     )
 
