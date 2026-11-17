@@ -16,7 +16,7 @@
 
 <section class="bookings-list">
   {% for b in bookings %}
-  {% if b.status.title == 'Confirmed' %}
+  {% if b.status.title == 'Confirmed' or b.status.title == 'InProgress' %}
   <a href="{% url 'booking_edit' b.id %}" class="booking-link">
     {% else %}
     <div class="booking-link">

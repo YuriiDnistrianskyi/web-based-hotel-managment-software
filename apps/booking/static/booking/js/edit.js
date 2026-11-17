@@ -7,8 +7,6 @@ const serviceCheckboxes = document.querySelectorAll(
     'input[name="services"]'
 );
 
-console.log("Test")
-
 const today = new Date()
 
 const tomorrow = new Date()
@@ -17,8 +15,15 @@ tomorrow.setDate(today.getDate() + 1)
 const todayStr = today.toISOString().split("T")[0];
 const tomorrowStr = tomorrow.toISOString().split("T")[0];
 
-checkin.min = todayStr;
-checkout.min = tomorrowStr;
+const isStart = bookingForm.dataset.status == 'Confirmed' ? false : true;
+
+if (isStart) {
+    checkin.readOnly = true;
+    checkout.min = todayStr;
+} else {
+    checkin.min = todayStr;
+    checkout.min = tomorrowStr;
+}
 
 checkin.addEventListener("change", () => {
   const next = new Date(checkin.value);
