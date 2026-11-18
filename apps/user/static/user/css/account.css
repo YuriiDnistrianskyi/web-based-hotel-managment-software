@@ -151,6 +151,7 @@
 
 .btn-primary,
 .btn-secondary,
+.btn-logout,
 .btn-danger {
     display: inline-flex;
     justify-content: center;
@@ -182,6 +183,16 @@
 
 .btn-secondary:hover {
     border-color: var(--accent);
+}
+
+.btn-logout {
+    background: var(--danger);
+    color: #fff;;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    background: var(--danger-hover);
 }
 
 .btn-danger {
