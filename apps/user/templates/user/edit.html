@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hotel — Edit Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'user/css/edit.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <h2>Edit profile</h2>
+    <p>Manage your personal information and password.</p>
+</section>
+
+<section class="edit-profile">
+
+    <div class="edit-card">
+
+        <div class="edit-card-header">
+            <div>
+                <h3>Account</h3>
+                <p>Your login email cannot be changed.</p>
+            </div>
+        </div>
+
+        <div class="profile-preview">
+
+            <div class="avatar">
+                {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+            </div>
+
+            <div class="profile-preview-info">
+                <span class="profile-name">
+                    {{ user.first_name }} {{ user.last_name }}
+                </span>
+
+                <p>{{ user.email }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <form method="POST" class="edit-card">
+
+        {% csrf_token %}
+
+        <div class="edit-card-header">
+            <div>
+                <h3>Personal information</h3>
+                <p>Change your first and last name.</p>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="form-section">
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="{{ form.first_name.id_for_label }}">
+                        First name
+                    </label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+
+                <div class="field">
+                    <label for="{{ form.last_name.id_for_label }}">
+                        Last name
+                    </label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'account' %}" class="btn-secondary">
+                Back
+            </a>
+
+            <button type="submit" class="btn-primary">
+                Save changes
+            </button>
+        </div>
+
+    </form>
+
+    <div class="password-card">
+
+        <div>
+            <h3>Password</h3>
+            <p>
+                To change your password,
+                use the separate password page.
+            </p>
+        </div>
+
+        <a href="/test" class="btn-secondary">
+            Change password
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

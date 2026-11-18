@@ -70,7 +70,7 @@
 
     <div class="account-actions">
         <a href="{% url 'history' %}" class="btn-secondary">Booking history</a>
-        <a href="/test" class="btn-primary">Edit profile</a>
+        <a href="{% url 'user_edit' %}" class="btn-primary">Edit profile</a>
         <form method="POST" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit" class="btn-logout">
