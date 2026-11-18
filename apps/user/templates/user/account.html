@@ -83,7 +83,7 @@
             </p>
         </div>
 
-        <form method="POST" action="/test"
+        <form method="POST" action="{% url 'user_delete' %}"
             onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.')">
 
             {% csrf_token %}

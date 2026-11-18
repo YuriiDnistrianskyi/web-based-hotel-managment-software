@@ -29,6 +29,7 @@ class User(models.Model):
     bonuses = models.IntegerField(default=0)
 
     last_login = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     @property
     def is_authenticated(self):
