@@ -1,0 +1,241 @@
+.page-header { padding: 40px 48px 8px; }
+
+.edit-profile {
+    padding: 24px 48px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.edit-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 26px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+.edit-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.edit-card-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.edit-card-header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.profile-preview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--green-700);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.profile-preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #263b30;
+}
+
+.profile-preview-info p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+.form-section {
+    padding: 22px 0;
+    border-top: 1px solid #edf1ee;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.edit-profile .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-profile .field label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.edit-profile .field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cfd8d2;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #263b30;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-profile .field input:focus {
+    outline: none;
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 3px rgba(76, 145, 102, 0.12);
+}
+
+.edit-profile .field ul.errorlist {
+    color: #c0392b;
+    font-size: 0.85rem;
+    list-style: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 22px;
+    border-top: 1px solid #edf1ee;
+}
+
+.form-errors {
+    background: #fdecea;
+    color: #c0392b;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+}
+
+.form-errors ul {
+    padding-left: 18px;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary {
+    background: var(--green-700);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--green-500);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #eef4f0;
+    color: var(--green-700);
+}
+
+.btn-secondary:hover {
+    background: #dfeae3;
+}
+
+.password-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid #dce5df;
+    border-radius: 16px;
+    padding: 24px 26px;
+}
+
+.password-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 7px;
+    color: #263b30;
+}
+
+.password-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+@media (max-width: 800px) {
+    .edit-profile {
+        padding: 24px 20px 36px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .edit-card {
+        padding: 20px 16px;
+    }
+
+    .profile-preview {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .edit-card-header {
+        align-items: flex-start;
+    }
+
+    .password-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .password-card a {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions a,
+    .form-actions button {
+        width: 100%;
+    }
+}

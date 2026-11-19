@@ -1,9 +1,44 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
+
+from apps.user.exceptions import InvalidPasswordException
+from apps.user.hashed_facade import HashedFacade
+from apps.user.models.user import User
+from apps.user.services.user_service import UserService
 
 
 class AuthService:
-    def authenticate(self, request, email, password):
-        return authenticate(request, email=email, password=password)
+    def __init__(self, user_service: UserService):
+        self._user_service = user_service
+
+    def authenticate(self, request, email=None, password=None):
+        try:
+            user = self._user_service.get_by_email(email)
+
+            if not user or not user.is_active or not HashedFacade.verify(password, user.password_hash):
+                return None
+
+            return user
+        except User.DoesNotExist:
+            return None
+
+    def get_user(self, user_id):
+        try:
+            user = self._user_service.get_by_id(user_id)
+
+            if user and user.is_active:
+                return user
+
+            return None
+        except User.DoesNotExist:
+            return None
+
+    def change_password(self, user: User, old_password: str, new_password: str):
+        if not HashedFacade.verify(old_password, user.password_hash):
+            raise InvalidPasswordException('Invalid old password')
+
+        new_password_hash = HashedFacade.hash(new_password)
+
+        self._user_service.update(user.id, password_hash=new_password_hash)
 
     def login(self, request, user):
         login(request, user)

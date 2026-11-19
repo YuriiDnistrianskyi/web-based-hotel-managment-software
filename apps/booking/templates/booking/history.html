@@ -66,7 +66,7 @@
         </div>
 
       </article>
-      {% if b.status.title == 'Confirmed' %}
+      {% if b.status.title == 'Confirmed' or b.status.title == 'InProgress' %}
   </a>
   {% else %}
   </div>
@@ -82,7 +82,7 @@
 {% if is_paginated %}
 <nav class="pagination">
   {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  <a href="?page={{ page_obj.previous_page_number }}">Prevision</a>
   {% endif %}
 
   <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
