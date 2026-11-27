@@ -50,6 +50,7 @@ async function updatePrice() {
             'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({
+            booking_id: Number(bookingForm.dataset.id),
             check_in: checkin.value,
             check_out: checkout.value,
             number_of_guests: numberOfGuests.value,

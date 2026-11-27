@@ -10,7 +10,7 @@ from apps.booking.services import booking_service, service_service
 
 @login_required
 @require_POST
-def booking_price(request, booking_id):
+def booking_price(request, hotel_room_id: int):
     data = json.loads(request.body)
     services = [
         service_service.get_by_id(int(str_id)) 
@@ -18,7 +18,8 @@ def booking_price(request, booking_id):
     ]
 
     price = booking_service.calculate(
-        booking_id, 
+        obj_id=data.get('booking_id'), 
+        hotel_room_id=hotel_room_id,
         dates= [
             date.fromisoformat(data.get('check_in')),
             date.fromisoformat(data.get('check_out'))

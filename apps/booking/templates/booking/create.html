@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hotel — New Booking{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'booking/css/create.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <h2>New booking</h2>
+    <p>Choose your dates, guests and additional services.</p>
+</section>
+
+<section class="create-booking">
+
+    <div class="create-card">
+
+        <div class="create-card-header">
+            <div>
+                <h3>Room {{ hotel_room.number }}</h3>
+                <p>Check the room details before booking.</p>
+            </div>
+
+            <span class="room-type">
+                {{ hotel_room.type.title }}
+            </span>
+        </div>
+
+        <div class="room-preview">
+
+            <div class="room-preview-image">
+                {% if hotel_room.image %}
+                <img src="{{ hotel_room.image.url }}" alt="Room {{ hotel_room.number }}">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" alt="Room {{ hotel_room.number }}">
+                {% endif %}
+            </div>
+
+            <div class="room-preview-info">
+                <span class="room-number">{{ hotel_room.number }}</span>
+
+                <p>Type: {{ hotel_room.type.title }}</p>
+                <p>Capacity: {{ hotel_room.capacity }} guests</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <form method="POST" class="create-card" id="booking-create-form"
+        data-price-url="{% url 'booking_price' hotel_room.id %}">
+
+        {% csrf_token %}
+
+        <div class="create-card-header">
+            <div>
+                <h3>Reservation details</h3>
+                <p>Select your stay dates and additional services.</p>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="form-section">
+
+            <h4>Stay dates</h4>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="{{ form.check_in.id_for_label }}">
+                        Check-in
+                    </label>
+                    {{ form.check_in }}
+                    {{ form.check_in.errors }}
+                </div>
+
+                <div class="field">
+                    <label for="{{ form.check_out.id_for_label }}">
+                        Check-out
+                    </label>
+                    {{ form.check_out }}
+                    {{ form.check_out.errors }}
+                </div>
+
+            </div>
+
+            <div class="field field-guests">
+                <label for="{{ form.number_of_guests.id_for_label }}">
+                    Number of guests
+                </label>
+                {{ form.number_of_guests }}
+                {{ form.number_of_guests.errors }}
+            </div>
+
+        </div>
+
+        <div class="form-section">
+
+            <h4>Additional services</h4>
+
+            <div class="services-grid">
+
+                {% for checkbox in form.services %}
+
+                <label class="service-option">
+
+                    {{ checkbox.tag }}
+
+                    <span class="service-content">
+                        <strong>{{ checkbox.choice_label }}</strong>
+                    </span>
+
+                    <span class="service-check"></span>
+
+                </label>
+
+                {% empty %}
+
+                <p>No services available.</p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="form-section">
+            <h4>Price</h4>
+            <div class="price-row price-total">
+                <span>Total</span>
+                <strong id="total-price">0 ₴</strong>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'home' %}" class="btn-secondary">
+                Back
+            </a>
+
+            <button type="submit" class="btn-primary">
+                Book now
+            </button>
+        </div>
+
+    </form>
+
+</section>
+<script src="{% static 'booking/js/create.js' %}"></script>
+
+{% endblock %}
