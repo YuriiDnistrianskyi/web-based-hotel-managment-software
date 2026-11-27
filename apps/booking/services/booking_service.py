@@ -93,11 +93,10 @@ class BookingService(BaseService[Booking]):
             raise BookingExistsException("This room is already booked for there dates")
 
         services = validation_data.pop('services', [])
-        new_price = self.calculate(obj_id=obj_id, services=services)
+        new_price = self.calculate(hotel_room_id=obj.hotel_room_id, obj_id=obj_id, services=services)
         validation_data["price"] = new_price
         result = super().update(obj_id, **validation_data)
 
-        services = validation_data.get("services", [])
         self._booking_to_service_rep.delete_by_booking_id(obj_id=obj_id)
         additional_data = {
             'check_in': check_in,

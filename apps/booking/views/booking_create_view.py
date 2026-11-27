@@ -57,6 +57,7 @@ class BookingCreateView(FormView):
                 check_in=data.get('check_in'),
                 check_out=data.get('check_out'),
                 number_of_guests=data.get('number_of_guests'),
+                services=data.get('services', []),
                 hotel_room=self.hotel_room,
             )
 
