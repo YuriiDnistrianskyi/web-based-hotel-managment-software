@@ -1,11 +1,11 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 
 from apps.booking.models.booking import Booking
 from apps.booking.services import booking_service
+from apps.user.mixins import UserRequiredMixin
 
 
-class HistoryView(LoginRequiredMixin, ListView):
+class HistoryView(UserRequiredMixin, ListView):
     model = Booking
     template_name = 'booking/history.html'
     context_object_name = 'bookings'

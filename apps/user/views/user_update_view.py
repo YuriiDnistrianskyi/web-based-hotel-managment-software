@@ -1,15 +1,15 @@
 from django import forms
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 
 from apps.user.forms.user_update_form import UserUpdateForm
+from apps.user.mixins import UserRequiredMixin
 from apps.user.models.user import User
 from apps.user.services import user_service
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(UserRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'user/edit.html'

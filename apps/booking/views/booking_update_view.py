@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
@@ -7,9 +6,10 @@ from django.views.generic import UpdateView
 from apps.booking.forms.booking_update_form import BookingUpdateForm
 from apps.booking.models.booking import Booking
 from apps.booking.services import booking_service
+from apps.user.mixins import UserRequiredMixin
 
 
-class BookingUpdateView(LoginRequiredMixin, UpdateView):
+class BookingUpdateView(UserRequiredMixin, UpdateView):
     model = Booking
     form_class = BookingUpdateForm
     template_name = 'booking/edit.html'

@@ -1,17 +1,17 @@
 import logging
 
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from apps.user.exceptions import InvalidPasswordException
 from apps.user.forms.password_update_from import PasswordUpdateForm
+from apps.user.mixins import UserRequiredMixin
 from apps.user.services import auth_service
 
 logger = logging.getLogger(__name__)
 
-class PasswordUpdateView(LoginRequiredMixin, FormView):
+class PasswordUpdateView(UserRequiredMixin, FormView):
     form_class = PasswordUpdateForm
     template_name = 'user/password_edit.html'
     success_url = reverse_lazy('account')

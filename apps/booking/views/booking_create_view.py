@@ -9,9 +9,10 @@ from apps.booking.exceptions.booking_exists_exception import BookingExistsExcept
 from apps.booking.forms.booking_create_form import BookingCreateForm
 from apps.booking.services import booking_service
 from apps.hotel_room.services import hotel_room_service
+from apps.user.mixins import UserRequiredMixin
 
 
-class BookingCreateView(FormView):
+class BookingCreateView(UserRequiredMixin, FormView):
     form_class = BookingCreateForm
     template_name = 'booking/create.html'
     success_url = reverse_lazy('home')
