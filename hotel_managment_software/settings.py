@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.hotel_room',
     'apps.booking',
-    'apps.admin'
+    'apps.dashboard'
 ]
 
 MIDDLEWARE = [

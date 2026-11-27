@@ -1,0 +1,118 @@
+{% extends "admin.html" %}
+{% load static %}
+
+{% block title %}Dashboard | Hotel{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <h2 class="page-title">Dashboard</h2>
+      <p class="page-subtitle">An overview of rooms and current bookings.</p>
+    </div>
+  </header>
+
+  <section class="stats" aria-label="Hotel overview">
+    <article class="stat-card stat-card--occupied">
+      <span class="stat-label">Occupied rooms</span>
+      <strong class="stat-value">{{ occupied_rooms|length }}</strong>
+      <span class="stat-note">Currently in use</span>
+    </article>
+    <article class="stat-card stat-card--available">
+      <span class="stat-label">Available rooms</span>
+      <strong class="stat-value">{{ vacant_rooms|length }}</strong>
+      <span class="stat-note">Ready for new guests</span>
+    </article>
+    <article class="stat-card stat-card--bookings">
+      <span class="stat-label">Active bookings</span>
+      <strong class="stat-value">{{ in_progress_bookings|length }}</strong>
+      <span class="stat-note">Guests currently staying</span>
+    </article>
+  </section>
+
+  <div class="dashboard-grid">
+    <section class="dashboard-panel">
+      <div class="panel-heading">
+        <h3>Occupied rooms</h3>
+        <span class="panel-count">{{ occupied_rooms|length }}</span>
+      </div>
+      <div class="room-list">
+        {% for room in occupied_rooms %}
+          <article class="room-row">
+            <div class="room-avatar">{{ room.number|slice:":1" }}</div>
+            <div class="room-info">
+              <h4>Room {{ room.number }}</h4>
+              <p>{{ room.type.title }} · {{ room.capacity }} guest{{ room.capacity|pluralize }}</p>
+            </div>
+            <div class="room-price">₴{{ room.price }} <span>/ night</span></div>
+          </article>
+        {% empty %}
+          <p class="empty-state">There are no occupied rooms right now.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="panel-heading">
+        <h3>Available rooms</h3>
+        <span class="panel-count">{{ vacant_rooms|length }}</span>
+      </div>
+      <div class="room-list">
+        {% for room in vacant_rooms %}
+          <article class="room-row">
+            <div class="room-avatar room-avatar--available">{{ room.number|slice:":1" }}</div>
+            <div class="room-info">
+              <h4>Room {{ room.number }}</h4>
+              <p>{{ room.type.title }} · {{ room.capacity }} guest{{ room.capacity|pluralize }}</p>
+            </div>
+            <div class="room-price">₴{{ room.price }} <span>/ night</span></div>
+          </article>
+        {% empty %}
+          <p class="empty-state">No rooms are currently available.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="panel-heading">
+        <h3>Active bookings</h3>
+        <span class="panel-count">{{ in_progress_bookings|length }}</span>
+      </div>
+      <div class="booking-list">
+        {% for booking in in_progress_bookings %}
+          <article class="booking-card">
+            <div class="booking-card-top">
+              <div class="booking-avatar">{{ booking.user.first_name|slice:":1" }}{{ booking.user.last_name|slice:":1" }}</div>
+              <span class="booking-status">In progress</span>
+            </div>
+            <h4>{{ booking.user.first_name }} {{ booking.user.last_name }}</h4>
+            <p class="booking-email">{{ booking.user.email }}</p>
+            <div class="booking-details">
+              <span>Room {{ booking.hotel_room.number }}</span>
+              <span>{{ booking.number_of_guests }} guest{{ booking.number_of_guests|pluralize }}</span>
+            </div>
+            <div class="booking-dates">{{ booking.check_in|date:"M j, Y" }} – {{ booking.check_out|date:"M j, Y" }}</div>
+            <div class="booking-services" aria-label="Included services">
+              {% for service in booking.services.all %}
+                <span class="service-chip">{{ service.title }}</span>
+              {% empty %}
+                <span class="service-none">No additional services</span>
+              {% endfor %}
+            </div>
+            <div class="booking-card-footer">
+              <span>Total</span>
+              <strong>₴{{ booking.price }}</strong>
+            </div>
+          </article>
+        {% empty %}
+          <p class="empty-state">There are no active bookings.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

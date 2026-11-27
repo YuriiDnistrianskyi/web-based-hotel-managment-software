@@ -23,5 +23,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/rooms', permanent=False)),
     path('', include('apps.hotel_room.urls')),
     path('', include('apps.user.urls')),
-    path('', include('apps.booking.urls'))
+    path('', include('apps.booking.urls')),
+    path('a/', include('apps.dashboard.urls'))
 ]
