@@ -7,11 +7,11 @@ from django.views.decorators.http import require_POST
 
 from apps.booking.services import booking_service, service_service
 from apps.user.constants import ConstUserRole
-from apps.user.role_required import role_requred
+from apps.user.role_required import role_required
 
 
 @login_required
-@role_requred(ConstUserRole.USER)
+@role_required(ConstUserRole.USER)
 @require_POST
 def booking_price(request, hotel_room_id: int):
     data = json.loads(request.body)

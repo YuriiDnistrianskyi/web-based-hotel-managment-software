@@ -20,19 +20,19 @@
     <ul class="nav">
       <li>
         <a 
-        href="/home"
+        href="{% url 'home' %}"
            class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
           Home
         </a>
       </li>
       <li>
-        <a href="/history"
+        <a href="{% url 'history' %}"
            class="{% if request.resolver_match.url_name == 'history' %}active{% endif %}">
           History
         </a>
       </li>
       <li>
-        <a href="/account"
+        <a href="{% url 'account' %}"
            class="{% if request.resolver_match.url_name == 'account' %}active{% endif %}">
           Account
         </a>
