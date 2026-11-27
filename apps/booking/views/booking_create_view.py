@@ -5,6 +5,7 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
+from apps.booking.exceptions.booking_exists_exception import BookingExistsException
 from apps.booking.forms.booking_create_form import BookingCreateForm
 from apps.booking.services import booking_service
 from apps.hotel_room.services import hotel_room_service
@@ -39,7 +40,7 @@ class BookingCreateView(FormView):
         initial.update({
             'check_in': self.request.GET.get('check_in', today),
             'check_out': self.request.GET.get('check_out', tomorrow),
-            'number_of_guests': self.request.GET.get('capacity', self.hotel_room.capacity)
+            'number_of_guests': self.request.GET.get('capacity') or self.hotel_room.capacity
         })
 
         return initial
@@ -65,4 +66,6 @@ class BookingCreateView(FormView):
         except forms.ValidationError as error:
             form.add_error(None, error)
             return self.form_invalid(form)
-        
+        except BookingExistsException as error:
+            form.add_error(None, error)
+            return self.form_invalid(form)
