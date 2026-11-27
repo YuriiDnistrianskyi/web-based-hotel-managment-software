@@ -48,3 +48,6 @@ class User(models.Model):
         return User.objects.create(
             **validation_data
         )
+
+    def get_role(self):
+        return self.role.title

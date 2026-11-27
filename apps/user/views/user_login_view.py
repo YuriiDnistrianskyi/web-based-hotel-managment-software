@@ -1,8 +1,10 @@
 import logging
 
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
+from apps.user.constants.const_user_role import ConstUserRole
 from apps.user.forms.login_form import LoginForm
 from apps.user.services import auth_service
 
@@ -26,6 +28,12 @@ class UserLoginView(FormView):
                 return self.form_invalid(form)
 
             auth_service.login(self.request, user)
+
+            role = user.get_role()
+            if role == ConstUserRole.ADMIN:
+                return HttpResponseRedirect(
+                    reverse_lazy('dashboard')
+                )
 
             return super().form_valid(form)
         except Exception as ex:
