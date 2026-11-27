@@ -7,9 +7,9 @@ from apps.booking.views.booking_update_view import BookingUpdateView
 from apps.booking.views.history_view import HistoryView
 
 urlpatterns = [
-    path('history/', HistoryView.as_view(), name='history'),
-    path('booking/create/<int:hotel_room_id>', BookingCreateView.as_view(), name='booking_create'),
-    path('booking/edit/<int:pk>', BookingUpdateView.as_view(), name='booking_edit'),
-    path('booking/cancel/<int:booking_id>', cancel_booking, name='booking_cancel'),
-    path('booking/price/<int:hotel_room_id>', booking_price, name='booking_price')
+    path('bookings/', HistoryView.as_view(), name='history'),
+    path('bookings/create/<int:hotel_room_id>', BookingCreateView.as_view(), name='booking_create'),
+    path('bookings/edit/<int:pk>', BookingUpdateView.as_view(), name='booking_edit'),
+    path('bookings/cancel/<int:booking_id>', cancel_booking, name='booking_cancel'),
+    path('bookings/price/<int:hotel_room_id>', booking_price, name='booking_price')
 ]
