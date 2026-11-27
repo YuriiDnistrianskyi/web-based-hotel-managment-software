@@ -4,6 +4,7 @@ from django.db import models
 from apps.booking.models.booking_status_type import BookingStatusType
 from apps.hotel_room.models.hotel_room import HotelRoom
 from apps.user.models.user import User
+
 from .service import Service
 
 
@@ -51,14 +52,6 @@ class Booking(models.Model):
 
     @staticmethod
     def factory(**validation_data):
-        room_number = validation_data.pop('room')
-        user_email = validation_data.pop('user')
-        status_name = validation_data.pop('status')
-
-        validation_data['hotel_room_id'] = HotelRoom.objects.get(number=room_number).id
-        validation_data['user_id'] = User.objects.get(email=user_email).id
-        validation_data['status_id'] = BookingStatusType.objects.get(name=status_name).id
-
         return Booking.objects.create(
             **validation_data
         )

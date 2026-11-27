@@ -11,8 +11,12 @@ const tomorrowStr = tomorrow.toISOString().split("T")[0];
 
 checkin.min = todayStr;
 checkout.min = tomorrowStr;
-checkin.value = todayStr;
-checkout.value = tomorrowStr;
+if (!checkin.value) {
+  checkin.value = todayStr;
+}
+if (!checkout.value) {
+  checkout.value = tomorrowStr;
+}
 
 checkin.addEventListener("change", () => {
   const next = new Date(checkin.value);

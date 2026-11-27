@@ -17,13 +17,17 @@ class CalculatorManager:
     }
 
     @classmethod
-    def calculate(cls, booking: Booking, service: Service, **additional_data) -> Decimal:
+    def calculate(cls, service: Service, booking: Booking | None=None, **additional_data) -> Decimal:
         price = Decimal('0.00')
 
         calculator_class = cls.CALCULATORS.get(service.title)
         if calculator_class:
             calculator = calculator_class()
-            price += calculator.calculate(booking, service, **additional_data)
+            price += calculator.calculate(
+                service=service,
+                booking=booking,
+                **additional_data
+            )
         else:
             logger.error(f"Unknow service title in CALCULATORS: {service.title}")
 

@@ -6,5 +6,5 @@ from apps.booking.models import Booking, Service
 
 class ICalculator(ABC):
     @abstractmethod
-    def calculate(self, booking: Booking, service: Service, **additional_data) -> Decimal:
+    def calculate(self, service: Service, booking: Booking=None, **additional_data) -> Decimal:
         pass

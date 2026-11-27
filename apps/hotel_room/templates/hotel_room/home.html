@@ -73,7 +73,7 @@
         <div class="room-meta">Capacity: {{ room.capacity }} guest.</div>
         <div class="room-footer">
           <div class="price">{{ room.price|floatformat:0 }} ₴ <span>/ night</span></div>
-          <button class="btn">Reserve</button>
+          <a href="{% url 'booking_create' room.id %}?{{ request.GET.urlencode }}" class="btn">Reserve</a>
         </div>
       </div>
     </article>

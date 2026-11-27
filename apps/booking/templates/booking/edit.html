@@ -50,8 +50,8 @@
         </div>
     </div>
 
-    <form method="POST" class="edit-card" id="booking-edit-form" data-price-url="{% url 'booking_price' booking.id %}"
-        data-status="{{ booking.status.title }}">
+    <form method="POST" class="edit-card" id="booking-edit-form" data-price-url="{% url 'booking_price' booking.hotel_room.id %}"
+        data-status="{{ booking.status.title }}" data-id="{{ booking.id }}">
 
         {% csrf_token %}
 
