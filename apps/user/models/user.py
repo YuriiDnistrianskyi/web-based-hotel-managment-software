@@ -17,13 +17,13 @@ class User(models.Model):
     """
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15, default="")
+    email = models.EmailField(max_length=254, unique=True)
+    phone = models.CharField(max_length=15, default=None, null=True)
     password_hash = models.CharField(max_length=400)
-    date_of_birth = models.DateField(default=None)
+    date_of_birth = models.DateField(null=True, blank=True)
     role = models.ForeignKey(
         UserRoleType,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="users"
     )
     bonuses = models.IntegerField(default=0)
