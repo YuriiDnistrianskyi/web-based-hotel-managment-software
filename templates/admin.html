@@ -19,13 +19,13 @@
 
     <ul class="nav">
       <li>
-        <a href=""
-           class="{% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+        <a href="{% url 'dashboard' %}"
+           class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
           Dashboard
         </a>
       </li>
       <li>
-        <a href=""
+        <a href="{% url 'admin_rooms' %}"
            class="{% if request.resolver_match.url_name == 'admin_rooms' %}active{% endif %}">
           Rooms
         </a>

@@ -1,0 +1,86 @@
+{% extends "admin.html" %}
+{% load static %}
+
+{% block title %}Rooms — Hotel{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'dashboard/css/rooms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="rooms-page">
+  <header class="rooms-header">
+    <div>
+      <h2 class="rooms-title">Rooms</h2>
+      <p class="rooms-subtitle">All hotel rooms and their current status.</p>
+    </div>
+    <div class="rooms-header-actions">
+      <span class="rooms-total">{{ page_obj.paginator.count }} room{{ page_obj.paginator.count|pluralize }}</span>
+      <a href="{% url 'dashboard' %}" class="room-create-button" type="button">Add room</a>
+    </div>
+  </header>
+
+  <form class="rooms-filter" method="get">
+    <label for="room-status">Filter by status</label>
+    <select id="room-status" name="status" onchange="this.form.submit()">
+      <option value="">All statuses</option>
+      {% for status in room_statuses %}
+        <option value="{{ status }}" {% if room_status == status|stringformat:"s" %}selected{% endif %}>{{ status }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="room-type">Filter by type</label>
+    <select id="room-type" name="type" onchange="this.form.submit()">
+      <option value="">All types</option>
+      {% for type in room_types %}
+        <option value="{{ type }}" {% if room_type == type|stringformat:"s" %}selected{% endif %}>{{ type }}</option>
+      {% endfor %}
+    </select>
+
+    {% if room_status or room_type %}
+      <a class="filter-clear" href="{% url 'admin_rooms' %}">Clear filters</a>
+    {% endif %}
+  </form>
+
+  <section class="rooms-grid" aria-label="Rooms">
+    {% for room in rooms %}
+      <article class="room">
+        <div class="room-image-wrap">
+          {% if room.image %}
+            <img src="{{ room.image.url }}" alt="{{ room.type.title }} — Room {{ room.number }}">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="Default room — Room {{ room.number }}">
+          {% endif %}
+          <span class="room-status room-status--{{ room.status.title|slugify }}">{{ room.status.title }}</span>
+        </div>
+        <div class="room-body">
+          <div class="room-type">{{ room.type.title }}</div>
+          <div class="room-meta">Room {{ room.number }} &middot; Capacity: {{ room.capacity }} guest{{ room.capacity|pluralize }}</div>
+          <div class="room-footer">
+            <div class="price">{{ room.price|floatformat:0 }} &#8372; <span>/ night</span></div>
+          </div>
+        </div>
+      </article>
+    {% empty %}
+      <div class="rooms-empty">
+        <span class="empty-icon" aria-hidden="true">&#8981;</span>
+        <h3>No rooms found</h3>
+        <p>Try selecting a different status or view all rooms.</p>
+        {% if selected_status %}<a href="{% url 'admin_rooms' %}">Show all rooms</a>{% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  {% if is_paginated %}
+    <nav class="rooms-pagination" aria-label="Room pages">
+      {% if page_obj.has_previous %}
+        <a href="?{% if selected_status %}status={{ selected_status }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous page">Previous</a>
+      {% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?{% if selected_status %}status={{ selected_status }}&amp;{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next page">Next</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
